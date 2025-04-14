@@ -1,0 +1,78 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+/bin/
+/dist/
+/out/
+
+tools/
+# Test binary, built with `go test -c`
+*.test
+*.prof
+*.trace
+
+# Dependency directories
+/vendor/
+
+# Go workspace file
+go.work
+
+# Go module files (but keep go.mod and go.sum)
+go.works
+
+# Environment files
+.env
+.env.local
+.env*.local
+
+# IDE specific
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-workspace
+
+# OS generated
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Debug files
+debug
+*.debug
+
+# Coverage tools
+*.out
+
+# Project specific
+/cmd/*/bin/
+/tmp/
+
+# Editor configs
+.editorconfig
+
+# Log files
+*.log
+
+# Binaries checked in by mistake
+*.md  # Keep an empty README if needed
+README-NOSTR.md
+README-SIMPLIFIED.md
+READMEold.md
+send_message.sh
+.env
+simple_post.go
+simple_send.sh
+SIMPLIFIED.md
+temp_key.txt
+~/.nostr/keys.json
+.env
+.env.simple
+~/.nostr/keys.json
