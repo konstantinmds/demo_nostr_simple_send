@@ -60,7 +60,6 @@ func main() {
 
 	fmt.Printf("Using public key: %s\n", npub)
 
-	// Create event
 	ev := nostr.Event{
 		PubKey:    pubKey,
 		CreatedAt: nostr.Timestamp(time.Now().Unix()),
@@ -72,7 +71,6 @@ func main() {
 	// Add client tag
 	ev.Tags = append(ev.Tags, nostr.Tag{"client", *clientID})
 
-	// Process any custom tags
 	if *tags != "" {
 		// Split by commas to get key:value pairs
 		pairs := strings.Split(*tags, ",")
@@ -82,22 +80,17 @@ func main() {
 			if len(kv) == 2 {
 				key := strings.TrimSpace(kv[0])
 				value := strings.TrimSpace(kv[1])
-				
-				// Add decoding logic for NIP-19 formats
-				if strings.HasPrefix(value, "npub") || strings.HasPrefix(value, "nprofile") {
+								if strings.HasPrefix(value, "npub") || strings.HasPrefix(value, "nprofile") {
 					_, decoded, err := nip19.Decode(value)
 					if err != nil {
 						log.Fatalf("Error decoding %s: %v", value, err)
 					}
-					// Handle different decoded types
 					switch v := decoded.(type) {
 					case string:
 						value = v
 					case *nostr.ProfilePointer:
-						// For nprofile format
 						value = v.PublicKey
 					case nostr.ProfilePointer:
-						// Alternate form of ProfilePointer
 						value = v.PublicKey
 					default:
 						log.Fatalf("Unsupported NIP-19 type: %T for value %s", decoded, value)
@@ -111,7 +104,6 @@ func main() {
 		}
 	}
 
-	// Sign event
 	err = ev.Sign(sk)
 	if err != nil {
 		log.Fatalf("Error signing event: %v", err)
@@ -127,7 +119,6 @@ func main() {
 	}
 	fmt.Println("Signature verified successfully")
 
-	// Connect to relay
 	fmt.Printf("Connecting to relay: %s\n", *relayURL)
 	relay, err := nostr.RelayConnect(ctx, *relayURL)
 	if err != nil {
@@ -135,7 +126,6 @@ func main() {
 	}
 	defer relay.Close()
 
-	// Publish event
 	fmt.Println("Publishing event...")
 	err = relay.Publish(ctx, ev)
 	if err != nil {
